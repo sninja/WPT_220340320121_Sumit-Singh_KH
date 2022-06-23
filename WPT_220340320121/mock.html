@@ -1,0 +1,82 @@
+<html>
+
+<body>
+
+
+	<input type="text" name="bookid" id="bookid" placeholder="Book ID">
+	<span id="message"> message</span><br>
+	<input type="text" name="bookn" id="bookn" placeholder="Book name"><br>
+	<input type="text" name="price" id="price" placeholder="Book price"><br>
+
+	<input type="button" value="Add" id="insert">
+	<hr>
+	<span id="display">Testing display</span>
+
+</body>
+
+<script src="jquery-3.5.1.min.js"></script>
+<script>//our scrip will come here 
+
+
+
+	$(document).ready(function () {
+		console.log("Page loaded test");
+		$("#insert").click(function () {
+			console.log("click event");
+			let input = { bookid: $('#bookid').val(), bookname: $('#bookn').val(), bookprice: $('#price').val() }
+			let ajaxparams = {
+				data: input,
+				url: 'http://localhost:8081/insertbook',
+				type: 'get',
+				dataType: 'json',
+				success: (datafromserver) => {
+					if (datafromserver.status === true) {
+						console.log("Inserted into table");
+						$('#message').text("Book added successfully");
+					}
+					else {
+						console.log("Book not added");
+						$('#message').text("Book not added");
+					}
+				},
+				error: (errorfromserver) => {
+					console.log(errorfromserver);
+					$('#message').text("Error occured");
+				}
+			}
+			$.ajax(ajaxparams);
+		});
+		// testing
+		// $("#bookid").blur(function () {
+		// 	console.log("click event");
+		// 	let input = { bookid: $('#bookid').val(), bookname: $('#bookn').val(), bookprice: $('#price').val() }
+		// 	let ajaxparams = {
+		// 		data: input,
+		// 		url: 'http://localhost:8081/insertbook',
+		// 		type: 'get',
+		// 		dataType: 'json',
+		// 		success: (datafromserver) => {
+		// 			if (datafromserver.status === true) {
+		// 				console.log("Inserted into table");
+		// 				$('#display').text("Book added successfully");
+		// 			}
+		// 			else {
+		// 				console.log("Book not added");
+		// 				$('#display').text("Book not added");
+		// 			}
+		// 		},
+		// 		error: (errorfromserver) => {
+		// 			console.log(errorfromserver);
+		// 			$('#message').text("Error occured");
+		// 		}
+		// 	}
+		// 	$.ajax(ajaxparams);
+		// });
+		// testing
+	});
+
+
+</script>
+
+
+</html>
